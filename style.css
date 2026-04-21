@@ -1,0 +1,12 @@
+.year2021 {
+  @apply text-purple-600 font-bold;
+}
+.year2022 {
+  @apply text-green-600 font-bold;
+}
+.year2023 {
+  @apply text-blue-600 font-bold;
+}
+.year2024 {
+  @apply text-orange-600 font-bold;
+}

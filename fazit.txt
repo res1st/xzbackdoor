@@ -1,0 +1,34 @@
+1. Software Composition Analysis (SCA)
+Das ist der wichtigste Schritt. SCA-Tools scannen deine pom.xml (Maven) oder build.gradle (Gradle) gegen Datenbanken bekannter Sicherheitslücken (CVEs).
+
+OWASP Dependency-Check: Ein Klassiker für Java. Es lässt sich direkt als Maven/Gradle-Plugin einbinden und bricht den Build ab, wenn bekannte Lücken gefunden werden.
+
+GitHub Dependabot / Snyk: Diese Tools scannen kontinuierlich im Hintergrund und erstellen automatisch Pull Requests, wenn eine Bibliothek aktualisiert werden muss.
+
+2. SBOM (Software Bill of Materials) erstellen
+Eine SBOM ist quasi der "Beipackzettel" deiner Software. Sie listet jede einzelne Library und deren Version auf.
+
+Warum? Wenn eine neue Lücke wie bei XZ bekannt wird, musst du sofort wissen: "Nutzen wir liblzma irgendwo?"
+
+Tooling: Mit dem cyclonedx-maven-plugin kannst du bei jedem Build automatisch eine SBOM im CycloneDX-Standard erzeugen.
+
+3. Dependency Pinning & Reproducible Builds
+Vertraue niemals auf "LATEST".
+
+Fixiere Versionen: Nutze exakte Versionsnummern statt Ranges (z.B. [1.2, 2.0)).
+
+Checksummen-Verifikation: Maven und Gradle können Checksummen prüfen. Das verhindert, dass ein Angreifer eine bestehende Version auf einem Repository-Server (wie Maven Central) heimlich durch eine manipulierte Version ersetzt.
+
+4. Repository Manager als Proxy
+Statt direkt von Maven Central zu laden, nutzen Firmen oft eigene Instanzen wie Sonatype Nexus oder JFrog Artifactory.
+
+Vorteil: Du kannst "Quarantäne"-Regeln aufstellen. Neue Versionen werden erst freigegeben, nachdem sie gescannt wurden.
+
+Interne Sicherheit: Es verhindert, dass Entwickler versehentlich schädliche Pakete aus öffentlichen Quellen ziehen (Dependency Confusion Attack).
+
+5. Den "XZ-Spezialfall" entdecken (Verhaltensanalyse)
+Einen Angriff wie bei XZ zu finden ist extrem schwer, da es keine bekannte Sicherheitslücke war, sondern eine neue Backdoor.
+
+Egress Filtering: Eine Web-Anwendung sollte niemals ungehindert ins Internet telefonieren dürfen. Wenn deine Java-App plötzlich versucht, eine Verbindung zu einer unbekannten IP in Singapur aufzubauen (wie es die Backdoor tun würde), sollte die Firewall (oder ein Intrusion Detection System) dies blockieren.
+
+Runtime Protection (RASP): Tools, die das Verhalten der JVM zur Laufzeit überwachen. Wenn eine Library plötzlich versucht, exec() aufzurufen oder Binärdateien zu modifizieren, schlägt das System Alarm.

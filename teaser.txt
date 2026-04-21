@@ -1,0 +1,2 @@
+Was würdest du tun, wenn dein SSH-Login plötzlich eine halbe Sekunde länger braucht? 
+Während die meisten es ignorieren würden, deckte ein neugieriger Entwickler durch diesen winzigen Hinweis eine jahrelange Komprimitierung auf, die fast jeden Server weltweit kompromittiert hätte. Erfahre, wie das funktioniert hat und was wir daraus für unsere eigene Software-Sicherheit lernen müssen.
