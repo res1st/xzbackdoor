@@ -34,13 +34,17 @@ Wie das Internet durch Zufall einer Katastrophe entging
 
 # Was ist passiert?
 
-Am 29. März 2024 veröffentlichte Andres Freund (Microsoft) seine Entdeckung einer Backdoor in den `xz-utils` (Datenkompression, LZMA).
+Am 29. März 2024 veröffentlichte [Andres Freund](https://mastodon.social/@AndresFreundTec) seine Entdeckung einer Backdoor in den `xz-utils` (Datenkompression, LZMA).
 
 - **Die Schwachstelle:** Remote Code Execution (RCE) via SSH.
 - **Der Mechanismus:** Schadcode wurde in Login-Zertifikaten versteckt; nur aktiv in Verbindung mit `systemd`.
 - **Der Zufall:** Gefunden durch Micro-Benchmarking von Postgres – SSH-Logins verbrauchten plötzlich ungewöhnlich viel CPU.
 - **Betroffene:** Vor allem "Bleeding Edge" Distributionen wie Debian Unstable, Fedora Rawhide und openSUSE Tumbleweed.
 
+---
+layout: image
+image: /images/ssh.png
+---
 
 ---
 
@@ -84,6 +88,10 @@ Um den Angriff zu verstehen, muss man die Rollen in der OSS-Welt kennen:
 
 **Das Problem:** Viele kritische Projekte werden von einer einzelnen Person als Hobby betrieben ("Single Point of Failure").
 
+#### Open Source Projekt-Fakten aus "THE 2024 TIDELIFT MAINTAINER IMPACT REPORT"
+* Über <span class="text-red-600">**60%**</span> der Maintainer arbeiten komplett unbezahlt. Die globale Infrastruktur basiert oft auf ehrenamtlicher Nachtarbeit
+* Über <span class="text-red-600">**61%**</span> der unbezahlten Maintainer führen ihre Projekte alleine
+
 ---
 
 # Die Akteure des Angriffs
@@ -103,7 +111,7 @@ Der Angriff war kein technischer Exploit, sondern brillantes Social Engineering.
 Ein "Long Con" über mehrere Jahre:
 
 - **2009**: xz-utils 5.0.0 erstes Github release
-- **2010-2020**: unregelmäßige Release-Zyklen (1-5 releases, teilweise nur Alpha-Versionen)
+- **2010-2020**: unregelmäßige Release-Zyklen (1-5 Releases, teilweise nur Alpha-Versionen)
 - <span class="year2021">Januar 2021</span>: GitHub Account `JiaT75` wird erstellt
 - <span class="year2022">2022</span>: Jia Tan beginnt mit kleinen Patches
   - "Jigar Kumar" baut gleichzeitig Druck auf Lasse Collin auf.  
@@ -123,7 +131,7 @@ Ein "Long Con" über mehrere Jahre:
 
 - <span class="year2023">2023</span>: Jia Tan übernimmt immer mehr Kontrolle
 - <span class="year2023">März</span>: Jin Tan ersetzt Kontaktmail bei google/oss-fuzz (Security-Tests) 
-- <span class="year2023">Juni</span>: Patches ovn "Hans Jansen", merged von Jian Tan, Vorbereitung für Backdoor. [ifunc hook](https://sourceware.org/glibc/wiki/GNU_IFUNC)
+- <span class="year2023">Juni</span>: Patches von "Hans Jansen", merged von Jian Tan, Vorbereitung für Backdoor. [ifunc hook](https://sourceware.org/glibc/wiki/GNU_IFUNC)
 - <span class="year2023">Juli</span>: Jia Tan schaltet ifunc support in oss-fuzz ab
 - <span class="year2024">2024</span>: Jahr des Angriffs
 - <span class="year2024">Feb</span>: Jia Tan merged backdoor code, versteckt in angeblichen Test-Files (compressed binary files)
@@ -145,7 +153,7 @@ Ein "Long Con" über mehrere Jahre:
   - Andres Freund informiert Debian und RedHat “privat”
   - RedHat vergibt CVE-2024-3094
 - <span class="year2024">28. März</span>: Andres Freund veröffentlicht Schwachstelle
-  - GitHub sperrt die Repos von tukaani und die Accounts von Lasse Collin und Jia Tan
+  - GitHub sperrt die Repos von [tukaani](https://github.com/tukaani-project) und die Accounts von Lasse Collin und Jia Tan
 - Die Analyse beginnt, breites Unterstützungsangebot an Lasse Collin
 
 ---
@@ -165,14 +173,16 @@ Hinter dem Pseudonym wird ein hochprofessioneller Akteur vermutet.
 ::right::
 
 # IRC
-![Jia Tan Timeline](/images/lia_backdoor.jpg)
+
+<img src="/images/lia_backdoor.jpg" style="opacity: 1 !important;" />
 
 ---
 
 # Was heißt das für uns?
 
 ### Für uns als Firma
-* **Maintainer unterstützen**: Regelmäßige finanzielle Zuwendungen, Maintainer einstellen oder "Features gegen Rechnung"  
+* **Maintainer unterstützen**: Regelmäßige finanzielle Zuwendungen, Maintainer einstellen oder "Features gegen Rechnung"
+  * Beispiel Andreas Freund ist bei Microsoft angestellt
 * **Zeit einräumen**: Eigene Entwickler ermutigen, während der Arbeitszeit an genutzten OSS-Projekten mitzuarbeiten
 * **Supply Chain**: Dependency-Upgrades genauer prüfen und in Audits investieren
 
@@ -204,5 +214,7 @@ Fragen?
 Quellen:
 - "Wie kommen eigentlich Hintertürchen in Open Source Software?" Christian Kühn, dmTech  
   Weitere Quellen in seinen Folien
+- ["THE 2024 TIDELIFT MAINTAINER IMPACT REPORT](https://www.sonarsource.com/the-2024-tidelift-maintainer-impact-report.pdf)
 - https://research.hisolutions.com/2024/04/xz-backdoor-eine-aufarbeitung/
 - https://boehs.org/node/everything-i-know-about-the-xz-backdoor
+
