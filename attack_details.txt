@@ -1,0 +1,8 @@
+Feature von C-Bibliotheken namens IFUNC. Normalerweise wird IFUNC verwendet, um zur Laufzeit die effizienteste Version einer Funktion auszuwählen (z. B. basierend auf dem Prozessor-Modell).
+
+RSA_public_decrypt
+Versteckter Payload: Der Angreifer sendet einen präparierten SSH Key der ganz speziell signiert war.
+
+Nur wenn diese kryptografische Prüfung erfolgreich war, wurde der im Key versteckte Befehl direkt mit den Rechten des SSH-Servers (meist root) ausgeführt.
+
+War es ein normaler Login-Versuch eines echten Nutzers, leitete die Backdoor den Aufruf einfach an die originale OpenSSL-Funktion weiter. Alles sah normal aus.
